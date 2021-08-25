@@ -1,0 +1,60 @@
+.container {
+  height: 80vh;
+  overflow-y: scroll
+}
+
+.chat_container {
+  border-bottom: 2px solid #dedede;
+  padding: 8px;
+  margin: 8px;
+}
+
+.chat_container::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+.chat_container img {
+  float: left;
+  max-width: 40px;
+  max-height: 40px;
+  width: 100%;
+  margin-right: 20px;
+  border-radius: 10%;
+}
+
+.form{
+    margin: 10px;
+}
+
+.message-area{
+  height: 5vh;
+  display: flex;
+}
+
+.message-area-text{
+  width: 80%;
+}
+
+.message-area-button{
+  width: 20%;
+}
+
+.in_form{
+    width: 100%;
+    height: 100%;
+    resize: none;
+    border: 1px solid #ddd; 
+    box-sizing: border-box;
+}
+
+.talk{
+    width: 100%;
+    height: 100%;
+    background: #96BDC6;
+    color: #fff;
+    font-size: 2.0rem;
+    font-weight: bold;
+    border: 0;
+}
