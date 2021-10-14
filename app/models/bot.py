@@ -7,6 +7,7 @@ from models.ebdm_system import EbdmSystem
       year = {2020},
       publisher = {オーム社}
       } 
+      書籍コードを一部改変して使用
 """
 
 

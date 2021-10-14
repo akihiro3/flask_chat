@@ -2,10 +2,29 @@
     margin: 0px;
     padding: 0px;
 }
+
+
+
 a.base{
     text-decoration: none;
     color: white;
+    font-size: x-large; 
 }
+
+a.account{
+    text-decoration: none;
+    font-size: medium;
+    color: white;
+}
+
+a.base:hover{
+    color: white;
+}
+
+a.account:hover{
+    color: gray;
+}
+
 
 header{
     width: 100%;
@@ -16,12 +35,19 @@ header{
 }
 
 header .wrapper {
+    display: flex;
+    justify-content: space-between;
     margin: 8px;    
     font-weight: bold;
-    font-size: 30px; 
     text-decoration: none;
     color: white;
 }
 
+.body{
+    overflow-x: hidden;
+}
 
+.alert alert-info{
+    position: relative;
+}
 

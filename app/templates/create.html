@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block head %}
+{% endblock %}
+
+{% block body %}
+<form action="/create" method=post>
+    <div class="form-group">
+        <label for="exampleFormControlInput1" class="form-label">User</label>
+        <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Username" , name=name>
+    </div>
+    <div class="form-group">
+        <label for="exampleFormControlInput1" class="form-label">Password</label>
+        <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Password" , name=pas>
+    </div>
+    <button type="submit" class="btn btn-primary mb-3">login</button>
+</form>
+{% endblock %}

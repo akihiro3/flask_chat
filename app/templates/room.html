@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block head %}
+{% endblock %}
+
+{% block body %}
+<!--ユーザが複数の部屋を作れるようにできる機能のためのHTML-->
+<div class="form">
+    <form action="/" method="POST">
+        <label for="name">username</label>
+        <input class="in_form" type="text" name="name" required>
+        <input class="talk" type="submit" value="Create">
+    </form>
+</div>
+{% endblock %}

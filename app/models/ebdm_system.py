@@ -9,6 +9,7 @@ from sklearn.feature_extraction.text import CountVectorizer
       author = {東中 竜一郎 and 稲葉 通将 and 水上 雅博},
       year = {2020},
       publisher = {オーム社}
+      書籍コードを一部改変して使用
       } 
 """
 
@@ -50,7 +51,7 @@ class EbdmSystem:
         return self.cosine(utt, pair[0]) * self.cosine(utt, pair[1])
 
     def cosine(self, a, b):
-        # 2章で発話のベクトル化をした時と同じように，sklearnのvectorizerを使って単語頻度ベクトルを作る
+        # sklearnのvectorizerを使って単語頻度ベクトルを作る
         a, b = CountVectorizer(token_pattern=u'(?u)\\b\\w+\\b').fit_transform(
             [self.tagger.parse(a), self.tagger.parse(b)])
         # cosine_similarityでコサイン類似度を計算する

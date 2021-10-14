@@ -1,5 +1,7 @@
-.container {
+.container-fluid {
   height: 80vh;
+  margin: auto;
+  bottom: auto;
   overflow-y: scroll
 }
 
@@ -9,6 +11,12 @@
   margin: 8px;
 }
 
+.flex{
+    display: flex;
+    justify-content:flex-start;
+}
+
+
 .chat_container::after {
   content: "";
   clear: both;
@@ -16,6 +24,8 @@
 }
 
 .chat_container img {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
   float: left;
   max-width: 40px;
   max-height: 40px;
@@ -25,7 +35,7 @@
 }
 
 .form{
-    margin: 10px;
+  margin: 10px;
 }
 
 .message-area{
@@ -54,7 +64,7 @@
     height: 100%;
     background: #96BDC6;
     color: #fff;
-    font-size: 2.0rem;
+    font-size: medium;
     font-weight: bold;
     border: 0;
 }

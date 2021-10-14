@@ -5,16 +5,20 @@
 {% endblock %}
 
 {% block body %}
-<div class="container">
+<div class="container-fluid ">
     <div id="scroll-inner">
         {% for chat in user.chats %}
         <div class="chat_container">
-            <img src="/static/img/user.jpg" alt="Avatar">
-            <p>{{ chat.user_chat }}</p>
+            <div class="flex">
+                <img src="/static/img/user.jpg" alt="Avatar">
+                <p>{{ chat.user_chat }}</p>
+            </div>
         </div>
         <div class="chat_container">
-            <img src="/static/img/bot.jpg" alt="Avatar">
-            <p>{{ chat.bot_chat }}</p>
+            <div class="flex">
+                <img src="/static/img/bot.jpg" alt="Avatar">
+                <p>{{ chat.bot_chat }}</p>
+            </div>
         </div>
         {% endfor %}
     </div>
@@ -24,13 +28,13 @@
     <form action="/chat/{{ user.id }}" method="POST">
         <div class="message-area">
             <div class="message-area-text">
-                <textarea class="in_form" type="text" name="text" required></textarea>
+                <input id="in_form" class="in_form" type="text" name="text" required>
             </div>
             <div class="message-area-button">
-                <input class="talk" type="submit" value="Chat">
+                <input id="talk" class="talk" type="submit" value="Chat">
             </div>
         </div>
-        <a class="delete" href="/delete/{{ user.id }}" role="button">Delete</a>
+        <!-- <a class="delete" href="/delete/{{ user.id }}" role="button">Delete</a>-->
     </form>
 </div>
 
