@@ -1,67 +1,66 @@
 version: "3"
-services: 
+services:
+  uwsgi:
+    build: ./app
+    volumes:
+      - ./app:/var/www/app
+    ports:
+      - "3031:3031"
+    environment:
+      TZ: "Asia/Tokyo"
+      PYTHONPATH: /var/www/app
+    deploy:
+      resources:
+        limits:
+          memory: 8g
+    networks:
+      esnet:
 
-    uwsgi:
-        build: ./app
-        volumes: 
-            - ./app:/var/www/
-        ports: 
-            - "3031:3031"
-        environment: 
-            TZ: "Asia/Tokyo"
-        deploy:
-            resources:
-                limits:
-                    memory: 8g
-        networks:
-            esnet:
+  elasticsearch:
+    build: ./elasticsearch
+    container_name: es
+    environment:
+      - discovery.type=single-node
+      - cluster.name=es-docker
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
 
-    elasticsearch:
-        build: ./elasticsearch
-        container_name: es
-        environment:
-            - discovery.type=single-node
-            - cluster.name=es-docker
-            - bootstrap.memory_lock=true
-            - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
-        
-        ulimits:
-            memlock:
-                soft: -1
-                hard: -1
-        volumes:
-            - ./elasticsearch/data:/usr/share/elasticsearch/data
-        ports:
-            - "9200:9200"
-            - "9300:9300"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - ./elasticsearch/data:/usr/share/elasticsearch/data
+    ports:
+      - "9200:9200"
+      - "9300:9300"
 
-        deploy:
-            resources:
-                limits:
-                    memory: 2g
+    deploy:
+      resources:
+        limits:
+          memory: 2g
 
-        networks:
-            esnet:
-                
-    nginx:
-        build: ./nginx
-        volumes: 
-            - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+    networks:
+      esnet:
 
-            - /tmp/nginx_log:/var/log/nginx
-        ports:
-            - "4231:80"
-        environment: 
-            TZ: "Asia/Tokyo"
-        
-        deploy:
-            resources:
-                limits:
-                    memory: 1g
+  nginx:
+    build: ./nginx
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
 
-        networks:
-            esnet:
+      - /tmp/nginx_log:/var/log/nginx
+    ports:
+      - "4231:80"
+    environment:
+      TZ: "Asia/Tokyo"
 
+    deploy:
+      resources:
+        limits:
+          memory: 1g
+
+    networks:
+      esnet:
 
 volumes:
   data:
@@ -69,4 +68,3 @@ volumes:
 
 networks:
   esnet:
-    
