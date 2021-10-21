@@ -1,8 +1,10 @@
 # ベースイメージ
 FROM python:3.6
 
+# pipのupgrade
 RUN pip3 install --upgrade pip && pip3 install --upgrade setuptools
 
+# 作業ディレクトリの変更
 WORKDIR /var/www/app
 
 # 依存Pythonライブラリ一覧コピー

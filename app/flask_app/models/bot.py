@@ -25,4 +25,9 @@ class Bot:
         # replyメソッドで発話を生成
         inp = {"utt": update}
         text = self.edbm.reply(inp)
+
+        # 返答が無かった時の処理
+        if text["utt"] is "":
+            text["utt"] = "すみません。よくわかりません。"
+
         return text["utt"]

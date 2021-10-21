@@ -4,6 +4,7 @@
 
 {% block body %}
 <form action="/create" method=post>
+    <p class="word">create</p>
     <div class="form-group">
         <label for="exampleFormControlInput1" class="form-label">User</label>
         <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Username" , name=name>
@@ -12,6 +13,6 @@
         <label for="exampleFormControlInput1" class="form-label">Password</label>
         <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Password" , name=pas>
     </div>
-    <button type="submit" class="btn btn-primary mb-3">login</button>
+    <button type="submit" class="btn btn-primary mb-3">create</button>
 </form>
 {% endblock %}

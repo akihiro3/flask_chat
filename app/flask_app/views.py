@@ -52,10 +52,12 @@ class Chat(db.Model):
 @app.route('/', methods=["GET", "POST"])
 def home():
     if request.method == "GET":
-        # home画面を表示
+        # loginしているか
         if not session.get('login'):
+            # home画面を表示
             return render_template("home.html")
         else:
+            # login情報をもとにチャットページへ
             name = session.get('login')
             login_user = db.session.query(User).\
                 filter(User.name == name).\
@@ -63,9 +65,11 @@ def home():
             login = login_user.id
             return redirect("/chat/%d" % login)
     else:
+        # loginしているか
         if not session.get('login'):
             flash("Userが存在しません")
         else:
+            # login情報をもとにチャットページへ
             name = request.form.get("name")
             login_user = db.session.query(User).\
                 filter(User.name == name).\
@@ -79,9 +83,11 @@ def home():
 @app.route('/login', methods=["GET", "POST"])
 def login():
     if request.method == "GET":
+        # loginしているか
         if not session.get('login'):
             return render_template("login.html")
         else:
+            # login情報をもとにチャットページへ
             name = session.get('login')
             login_user = db.session.query(User).\
                 filter(User.name == name).\
@@ -119,6 +125,7 @@ def login():
 
 @app.route('/logout')
 def logout():
+    # logoutする
     flash("logoutしました")
     session.pop('login', None)
     return render_template("home.html")
@@ -127,9 +134,11 @@ def logout():
 @app.route('/create', methods=["GET", "POST"])
 def create():
     if request.method == "GET":
+        # loginしているか
         if not session.get('login'):
             return render_template("create.html")
         else:
+            # login情報をもとにチャットページへ
             flash("loginずみです")
             name = session.get('login')
             login_user = db.session.query(User).\
@@ -138,6 +147,7 @@ def create():
             login = login_user.id
             return redirect("/chat/%d" % login)
     else:
+        # loginしているか
         if not session.get('login'):
             name = request.form.get("name")
             pas = request.form.get("pas")
@@ -146,7 +156,7 @@ def create():
             login_user = db.session.query(User).\
                 filter(User.name == name).\
                 first()
-            print(login_user)
+            # 新規ユーザならアカウントを作る
             if login_user is None:
                 login_user = User(name=name, pas=pas, date=today,)
                 db.session.add(login_user)
@@ -160,11 +170,12 @@ def create():
 
             # 既存ユーザの場合
             else:
-                flash("既に存在するuserです")
+                flash("すでにそのuserは存在します")
 
             return render_template("create.html")
 
         else:
+            # login情報をもとにチャットページへ
             flash("loginずみです")
             name = session.get('login')
             login_user = db.session.query(User).\
@@ -178,23 +189,26 @@ def create():
 # チャットページでの処理
 def chat(id):
     if request.method == "GET":
-        # GET requestはチャットページを表示
+        # loginしているか
         if not session.get('login'):
             return render_template("login.html")
         else:
+            # 存在するidか
             user = db.session.query(User).\
                 filter(User.id == id).\
                 first()
+            # idとlogin情報が一致しているか
             if user:
                 if user.name == session.get('login'):
                     return render_template("chat.html", user=user)
-
+            # login情報をもとにチャットページへ
             user = db.session.query(User).\
                 filter(User.name == session.get('login')).\
                 first()
             return redirect("/chat/%d" % user.id)
 
     else:
+        # loginしているか
         if not session.get('login'):
             return render_template("login.html")
         else:
@@ -248,25 +262,31 @@ def delete():
 @app.route('/api', methods=["POST"])
 def api():
     if request.method == 'POST':
+        # jsonデータの取得
         user_talk = request.json
         user_name = user_talk.get('name')
 
+        # データベースにユーザが存在するか
         login_user = db.session.query(User).\
             filter(User.name == user_name).\
             first()
         today = datetime.date.today()
 
+        # ユーザが存在しなかったら新しく作成
         if login_user is None:
             login_user = User(name=user_name, pas="api", date=today,)
             db.session.add(login_user)
             db.session.commit()
 
+        # botの返答の処理
         user = User.query.get(login_user.id)
         talk = user_talk.get('talk')
         bot_chat = bot.message(talk)
 
+        # chatのデータベースに追加
         new_chat = Chat(user_chat=talk, bot_chat=bot_chat, user=user)
         db.session.add(new_chat)
         db.session.commit()
 
+        # jsonで返す
         return jsonify({"reply": bot_chat})

@@ -9,6 +9,11 @@ a.base {
   font-size: x-large;
 }
 
+p.word {
+  padding-top: 10px;
+  padding-left: 1%;
+}
+
 .link {
   text-decoration: none;
   font-size: medium;

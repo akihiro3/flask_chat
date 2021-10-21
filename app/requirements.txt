@@ -8,4 +8,3 @@ Jinja2
 SQLAlchemy
 uwsgi
 mecab-python3==0.996.5
-flask-script

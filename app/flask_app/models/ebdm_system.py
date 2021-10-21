@@ -43,7 +43,7 @@ class EbdmSystem:
     def __reply(self, utt):
         # Elasticsearchの機能で100件の用例を抽出
         results = self.es.search(index='dialogue_pair',
-                                 body={'query': {'match': {'query': utt}}, 'size': 10, })
+                                 query={'match': {'query': utt}}, size=10,)
         return [(result['_source']['query'], result['_source']['response'], result["_score"]) for result in results['hits']['hits']]
 
     def evaluate(self, utt, pair):
